@@ -1,0 +1,70 @@
+==== Criação de migrations ====
+
+1) Criar a migration
+    $ php artisan make:migration created_<NOME-DA-TABELA>_table
+
+2) Organizar a migration
+    - acesse: ./database/migrations/0000_00_00_000000_created_<NOME-DA-TABELA>_table
+    - Dentro da function "Up" crie o eschema
+        Schema::create('<NOME-DA-TABELA>', function (Blueprint $table) {
+            $table->id();
+            $table->string('coluna_1', 'tamanho')->unique();
+            $table->text('coluna_2');
+            $table->text('coluna_3');
+            $table->timestamp();
+        });
+
+3) Executar o comando para criar todas as tables
+    $ php artisan migrate
+
+4) Voltar uma versão das tabelas
+    $ php artisan make:rollback
+
+
+=== Criando Controller para api
+
+1) Criar controller api
+    $ php artisan make:controller <Nome>Controller -- api
+    - INDEX: Ultilizado para listar
+    - STORE: Gravar os dados
+    - SHOW: Buscar item único por id
+    - UPDAE: Atualiza item único por id
+    - DESTROY: Deletar item único por id
+
+2) Pegando requisicoes
+    Pegar todos inputs
+    - $data = $request->all();
+
+    Pegar header
+    - $data = $request->header('<NOME-DA-HEADER>');
+
+    Atualizar dados
+    - Os dados não são enviado via form, mas, sim pelo metodo "x-www-form-urlencoded"
+
+=== JWT Laravel ===
+1) Instalar JWT para Laravel
+    $ composer require tymon/jwt-auth
+
+2) Add serviço dentro dos providers do app.php
+    Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+
+3) publicar as alterações
+    $ php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+
+4) gerar token
+    $ php artisan jwt:secret
+
+5) crie o model Autenticacao/User
+
+
+=== TESTE ===
+
+1) executar os testes
+    $ vendor/bin/phpunit
+
+2) locais para escrever os teste
+    - Feature para testas os recursos
+    - Unit para fazer teste unitario
+
+3) Observações importanes
+    - colocar a porta de test
